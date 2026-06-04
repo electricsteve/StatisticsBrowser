@@ -1,4 +1,4 @@
-package com.example.examplemod.platform.services;
+package dev.electricsteve.statisticsbrowser.platform.services;
 
 public interface IPlatformHelper {
 

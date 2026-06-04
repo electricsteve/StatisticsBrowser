@@ -1,6 +1,6 @@
-package com.example.examplemod.platform;
+package dev.electricsteve.statisticsbrowser.platform;
 
-import com.example.examplemod.platform.services.IPlatformHelper;
+import dev.electricsteve.statisticsbrowser.platform.services.IPlatformHelper;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class FabricPlatformHelper implements IPlatformHelper {
