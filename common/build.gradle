@@ -1,6 +1,9 @@
 plugins {
+    id 'java'
     id 'multiloader-common'
     id 'net.neoforged.moddev'
+    id "com.github.node-gradle.node" version "7.1.0"
+    id 'com.gradleup.shadow' version '9.4.2'
 }
 
 neoForge {
@@ -13,10 +16,50 @@ neoForge {
 }
 
 dependencies {
-    compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
+    compileOnly "org.spongepowered:mixin:0.8.5"
     // fabric and neoforge both bundle mixinextras, so it is safe to use it in common
-    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.5.3'
-    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.5.3'
+    compileOnly "io.github.llamalad7:mixinextras-common:0.5.3"
+    annotationProcessor "io.github.llamalad7:mixinextras-common:0.5.3"
+    implementation("io.javalin:javalin:7.2.2")
+}
+
+shadowJar {
+    relocate 'io.javalin', 'dev.electricsteve.statisticsbrowser.shadow.javalin'
+    relocate 'org.eclipse.jetty', 'dev.electricsteve.statisticsbrowser.shadow.jetty'
+}
+
+node {
+    version = "20.14.0"
+    download = true
+    nodeProjectDir = file("web/")
+    npmInstallCommand = "ci"
+}
+
+tasks.register('buildWebapp', NpmTask) {
+    dependsOn("npmInstall")
+    args = ["run", "build"]
+    inputs.dir("web/")
+    outputs.dir("web/dist/")
+}
+
+tasks.register('moveWebapp', Copy) {
+    dependsOn("buildWebapp")
+    from("web/dist/")
+    into("src/main/resources/web/")
+}
+
+tasks.processResources {
+    dependsOn("moveWebapp")
+}
+
+tasks.sourcesJar {
+    dependsOn("buildWebapp")
+}
+
+tasks.clean {
+    doFirst {
+        delete("web/dist/")
+    }
 }
 
 configurations {
