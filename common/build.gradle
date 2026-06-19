@@ -1,9 +1,7 @@
 plugins {
-    id 'java'
     id 'multiloader-common'
     id 'net.neoforged.moddev'
     id "com.github.node-gradle.node" version "7.1.0"
-    id 'com.gradleup.shadow' version '9.4.2'
 }
 
 neoForge {
@@ -23,13 +21,8 @@ dependencies {
     implementation("io.javalin:javalin:7.2.2")
 }
 
-shadowJar {
-    relocate 'io.javalin', 'dev.electricsteve.statisticsbrowser.shadow.javalin'
-    relocate 'org.eclipse.jetty', 'dev.electricsteve.statisticsbrowser.shadow.jetty'
-}
-
 node {
-    version = "20.14.0"
+    version = "24.17.0"
     download = true
     nodeProjectDir = file("web/")
     npmInstallCommand = "ci"
@@ -49,11 +42,11 @@ tasks.register('moveWebapp', Copy) {
 }
 
 tasks.processResources {
-    dependsOn("moveWebapp")
+    dependsOn(":common:moveWebapp")
 }
 
 tasks.sourcesJar {
-    dependsOn("buildWebapp")
+    dependsOn(":common:moveWebapp")
 }
 
 tasks.clean {

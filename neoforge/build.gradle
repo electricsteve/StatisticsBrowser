@@ -39,6 +39,14 @@ neoForge {
     }
 }
 
+tasks.processResources {
+    dependsOn(":common:moveWebapp")
+}
+
+tasks.sourcesJar {
+    dependsOn(":common:moveWebapp")
+}
+
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 // Implement mcgradleconventions loader attribute
