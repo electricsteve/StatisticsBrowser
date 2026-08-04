@@ -10,7 +10,7 @@ import RightSidebar from "./components/RightSidebar.vue";
       <LeftSidebar />
     </aside>
     <main class="app-layout__center">
-      <IndividualStatistics />
+      <IndividualStatistics player="ElectricSteve" />
     </main>
     <aside class="sidebar sidebar-right">
       <RightSidebar />

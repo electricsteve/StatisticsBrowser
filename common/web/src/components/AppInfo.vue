@@ -61,8 +61,7 @@ import logo from '../assets/vue.svg'
 }
 
 .app-info__version,
-.app-info__description,
-.app-info__minecraft {
+.app-info__description {
   color: var(--text);
 }
 
@@ -75,10 +74,15 @@ import logo from '../assets/vue.svg'
 }
 
 .app-info__description {
+  font-size: 0.8rem;
+  line-height: 1rem;
   min-width: 0;
 }
 
 .app-info__minecraft {
+  font-size: 0.7rem;
+  line-height: 1rem;
   text-align: right;
+  color: var(--text-g)
 }
 </style>

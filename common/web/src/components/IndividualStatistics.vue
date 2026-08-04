@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import {ref} from 'vue'
 
-const player = ref('ElectricSteve')
+const props = defineProps<{
+  player: string
+}>()
 const uuid = 'UUID: b8854d33-d71b-4c32-b00f-54edc7d9f5e'
 const tabs = ['Custom', 'Items', 'Mobs']
 const activeTab = ref('Custom')
@@ -131,6 +133,7 @@ h1 {
 
 .tab-button.active {
   color: var(--text-h);
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .stats-panel {
