@@ -2,9 +2,9 @@
 import LeftSidebar from "./components/LeftSidebar.vue";
 import IndividualStatistics from "./components/IndividualStatistics.vue";
 import RightSidebar from "./components/RightSidebar.vue";
-import type {Player} from "./types/IndividualStatistics.ts";
+import type {PlayerInfo} from "./types/PlayerInfo.ts";
 
-const player : Player = {
+const player : PlayerInfo = {
   name: "ElectricSteve",
   uuid: "ad2614b7-c330-4b1e-b53b-292a978b110a"
 };

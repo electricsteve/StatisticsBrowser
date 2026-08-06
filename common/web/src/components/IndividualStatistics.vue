@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import {ref} from 'vue'
-import type { Player } from '../types/IndividualStatistics'
+import type { PlayerInfo } from '../types/PlayerInfo'
 
-const props = defineProps<{ player: Player }>()
+const props = defineProps<{ player: PlayerInfo }>()
 const tabs = ['Custom', 'Items', 'Mobs']
 const activeTab = ref('Custom')
 const statistics = [

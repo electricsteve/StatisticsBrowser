@@ -1,5 +1,4 @@
-export interface Player {
+export interface PlayerInfo {
     name: string,
     uuid: string
 }
-

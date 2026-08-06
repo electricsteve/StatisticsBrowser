@@ -3,6 +3,9 @@ package dev.electricsteve.statisticsbrowser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.players.PlayerList;
+
 import org.eclipse.jetty.io.ByteBufferOutputStream;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -10,11 +13,13 @@ import org.jspecify.annotations.NonNull;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
+import java.util.List;
 import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
 import dev.electricsteve.statisticsbrowser.platform.Services;
+import dev.electricsteve.statisticsbrowser.types.PlayerInfo;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
 import io.javalin.json.JsonMapper;
@@ -41,7 +46,7 @@ public class StatisticsBrowserCommon {
                 staticFiles.location = Location.CLASSPATH;
             });
             config.routes.get("/api/status", ctx -> ctx.json("ok"));
-            config.routes.get("/api/player/{uuid}", ctx -> {
+            config.routes.get("/api/raw/{uuid}", ctx -> {
                 UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
                 ctx.json(StatisticsManager.getInstance().getPlayerData(uuid));
             });
@@ -49,6 +54,12 @@ public class StatisticsBrowserCommon {
                 UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
                 ctx.result(PlayerHeadManager.getInstance().getHeadImage(uuid));
                 ctx.contentType("image/png");
+            });
+            config.routes.get("/api/playerlist", ctx -> {
+                MinecraftServer server = StatisticsManager.getInstance().getMinecraftServer();
+                PlayerList playerList = server.getPlayerList();
+                List<PlayerInfo> playerInfoList = playerList.getPlayers().stream().map(PlayerInfo::new).toList();
+                ctx.json(playerInfoList);
             });
         }).start(7070);
     }
