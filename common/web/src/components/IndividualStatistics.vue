@@ -20,7 +20,7 @@ const statistics = [
   <main class="page-shell">
     <header class="topbar">
       <div class="topbar-copy">
-        <div class="player-mark" aria-hidden="true"></div>
+        <img class="player-mark" aria-hidden="true" :src="'/api/playerhead/' + player.uuid" alt="player head"/>
         <h1>{{ player.name }}</h1>
         <div class="player-uuid">UUID: {{ player.uuid }}</div>
       </div>
@@ -96,9 +96,6 @@ h1 {
   height: 38px;
   border: 3px solid var(--border);
   border-radius: 4px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent),
-    #ad8c52;
   image-rendering: pixelated;
 }
 

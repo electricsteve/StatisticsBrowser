@@ -1,13 +1,13 @@
 <script setup lang="ts">
 const players = [
-  {name: 'ElectricSteve', uuid: 'b8854d33-d71b-4c32-b00f-54edc7d9f5e'},
+  {name: 'ElectricSteve', uuid: 'ad2614b7-c330-4b1e-b53b-292a978b110a'},
 ]
 </script>
 
 <template>
   <div class="player-list" role="list">
     <button v-for="player in players" :key="player.name" class="player-row" role="menuitem">
-      <div class="player-mark" aria-hidden="true"></div>
+      <img class="player-mark" :src="'/api/playerhead/' + player.uuid" alt="player head" aria-hidden="true">
       <span class="player-name">{{ player.name }}</span>
     </button>
   </div>
@@ -43,9 +43,6 @@ const players = [
   height: clamp(44px, 5vw, 56px);
   border: 2px solid var(--border);
   border-radius: 4px;
-  background:
-      linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent),
-      #ad8c52;
   image-rendering: pixelated;
 }
 </style>
