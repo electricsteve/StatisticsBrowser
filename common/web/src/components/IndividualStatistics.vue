@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import {ref} from 'vue'
+import type { Player } from '../types/IndividualStatistics'
 
-const props = defineProps<{
-  player: string
-}>()
-const uuid = 'UUID: b8854d33-d71b-4c32-b00f-54edc7d9f5e'
+const props = defineProps<{ player: Player }>()
 const tabs = ['Custom', 'Items', 'Mobs']
 const activeTab = ref('Custom')
 const statistics = [
@@ -15,6 +13,7 @@ const statistics = [
   {name: 'Villagers traded with', value: '20'},
   {name: 'Days played', value: '43'},
 ]
+
 </script>
 
 <template>
@@ -22,8 +21,8 @@ const statistics = [
     <header class="topbar">
       <div class="topbar-copy">
         <div class="player-mark" aria-hidden="true"></div>
-        <h1>{{ player }}</h1>
-        <div class="player-uuid">{{ uuid }}</div>
+        <h1>{{ player.name }}</h1>
+        <div class="player-uuid">UUID: {{ player.uuid }}</div>
       </div>
 
       <nav class="tab-row" aria-label="Statistic categories">

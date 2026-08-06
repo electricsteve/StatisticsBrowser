@@ -3,11 +3,16 @@ package dev.electricsteve.statisticsbrowser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.eclipse.jetty.io.ByteBufferOutputStream;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 import java.util.UUID;
+
+import javax.imageio.ImageIO;
 
 import dev.electricsteve.statisticsbrowser.platform.Services;
 import io.javalin.Javalin;
@@ -39,6 +44,11 @@ public class StatisticsBrowserCommon {
             config.routes.get("/api/player/{uuid}", ctx -> {
                 UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
                 ctx.json(StatisticsManager.getInstance().getPlayerData(uuid));
+            });
+            config.routes.get("/api/playerhead/{uuid}", ctx -> {
+                UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
+                ctx.result(PlayerHeadManager.getInstance().getHeadImage(uuid));
+                ctx.contentType("image/png");
             });
         }).start(7070);
     }

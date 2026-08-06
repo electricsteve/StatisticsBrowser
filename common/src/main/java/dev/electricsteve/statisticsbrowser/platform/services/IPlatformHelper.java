@@ -1,5 +1,7 @@
 package dev.electricsteve.statisticsbrowser.platform.services;
 
+import java.nio.file.Path;
+
 public interface IPlatformHelper {
 
     /**
@@ -33,4 +35,11 @@ public interface IPlatformHelper {
 
         return isDevelopmentEnvironment() ? "development" : "production";
     }
+
+    /**
+     * Gets the config directory where the mod can put its files
+     *
+     * @return The config directory
+     */
+    Path getConfigDir();
 }

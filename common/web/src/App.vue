@@ -2,6 +2,12 @@
 import LeftSidebar from "./components/LeftSidebar.vue";
 import IndividualStatistics from "./components/IndividualStatistics.vue";
 import RightSidebar from "./components/RightSidebar.vue";
+import type {Player} from "./types/IndividualStatistics.ts";
+
+const player : Player = {
+  name: "ElectricSteve",
+  uuid: "ad2614b7-c330-4b1e-b53b-292a978b110a"
+};
 </script>
 
 <template>
@@ -10,7 +16,7 @@ import RightSidebar from "./components/RightSidebar.vue";
       <LeftSidebar />
     </aside>
     <main class="app-layout__center">
-      <IndividualStatistics player="ElectricSteve" />
+      <IndividualStatistics :player />
     </main>
     <aside class="sidebar sidebar-right">
       <RightSidebar />
