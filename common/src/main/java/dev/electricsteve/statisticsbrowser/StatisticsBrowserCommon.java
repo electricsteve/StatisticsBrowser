@@ -6,17 +6,12 @@ import com.google.gson.GsonBuilder;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.players.PlayerList;
 
-import org.eclipse.jetty.io.ByteBufferOutputStream;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.UUID;
-
-import javax.imageio.ImageIO;
 
 import dev.electricsteve.statisticsbrowser.platform.Services;
 import dev.electricsteve.statisticsbrowser.types.PlayerInfo;
@@ -48,7 +43,7 @@ public class StatisticsBrowserCommon {
             config.routes.get("/api/status", ctx -> ctx.json("ok"));
             config.routes.get("/api/raw/{uuid}", ctx -> {
                 UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
-                ctx.json(StatisticsManager.getInstance().getPlayerData(uuid));
+                ctx.json(StatisticsManager.getInstance().getRawPlayerData(uuid));
             });
             config.routes.get("/api/playerhead/{uuid}", ctx -> {
                 UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
@@ -56,9 +51,9 @@ public class StatisticsBrowserCommon {
                 ctx.contentType("image/png");
             });
             config.routes.get("/api/playerlist", ctx -> {
-                MinecraftServer server = StatisticsManager.getInstance().getMinecraftServer();
-                PlayerList playerList = server.getPlayerList();
-                List<PlayerInfo> playerInfoList = playerList.getPlayers().stream().map(PlayerInfo::new).toList();
+                boolean offlinePlayersIncluded = ctx.queryParamAsClass("offline", Boolean.class).getOrDefault(false);
+                boolean onlyOfflinePlayers = ctx.queryParamAsClass("onlyOffline", Boolean.class).getOrDefault(false);
+                List<PlayerInfo> playerInfoList = StatisticsManager.getInstance().getPlayerList(offlinePlayersIncluded, onlyOfflinePlayers);
                 ctx.json(playerInfoList);
             });
         }).start(7070);

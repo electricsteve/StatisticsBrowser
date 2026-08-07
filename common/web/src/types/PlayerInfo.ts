@@ -1,4 +1,5 @@
 export interface PlayerInfo {
     name: string,
-    uuid: string
+    uuid: string,
+    offline?: boolean
 }
