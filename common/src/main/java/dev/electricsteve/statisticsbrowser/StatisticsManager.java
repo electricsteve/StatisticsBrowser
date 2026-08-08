@@ -1,11 +1,10 @@
 package dev.electricsteve.statisticsbrowser;
 
-import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.mojang.authlib.GameProfile;
 
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.players.PlayerList;
 import net.minecraft.server.players.ProfileResolver;
 import net.minecraft.stats.ServerStatsCounter;
 import net.minecraft.world.level.storage.LevelResource;
@@ -38,7 +37,6 @@ public class StatisticsManager {
         if (INSTANCE == null) INSTANCE = new StatisticsManager();
         return INSTANCE;
     }
-
 
     /**
      * Set the minecraft server. Meant to be called on server start.
@@ -109,7 +107,13 @@ public class StatisticsManager {
         return playerInfoList;
     }
 
-    public JsonElement getRawPlayerData(UUID uuid) {
+    /// Get raw player stats from StatsCounter
+    public JsonObject getRawPlayerStats(UUID uuid) {
         return statsMap.get(uuid).serialize();
+    }
+
+    /// Get raw player stats, but padded with all custom stats, even if they are 0.
+    public JsonObject getFilledPlayerStats(UUID uuid) {
+        return statsMap.get(uuid).cloneFillAndSerialize(this.minecraftServer);
     }
 }

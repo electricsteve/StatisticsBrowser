@@ -3,9 +3,6 @@ package dev.electricsteve.statisticsbrowser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.players.PlayerList;
-
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
 
@@ -43,7 +40,11 @@ public class StatisticsBrowserCommon {
             config.routes.get("/api/status", ctx -> ctx.json("ok"));
             config.routes.get("/api/raw/{uuid}", ctx -> {
                 UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
-                ctx.json(StatisticsManager.getInstance().getRawPlayerData(uuid));
+                ctx.json(StatisticsManager.getInstance().getRawPlayerStats(uuid));
+            });
+            config.routes.get("/api/filled/{uuid}", ctx -> {
+                UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
+                ctx.json(StatisticsManager.getInstance().getFilledPlayerStats(uuid));
             });
             config.routes.get("/api/playerhead/{uuid}", ctx -> {
                 UUID uuid = UUID.fromString(ctx.pathParam("uuid"));
