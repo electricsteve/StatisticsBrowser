@@ -21,11 +21,20 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Stream;
 
 import dev.electricsteve.statisticsbrowser.types.PlayerInfo;
+import lombok.Getter;
+import lombok.Setter;
 
 public class StatisticsManager {
     private static StatisticsManager INSTANCE;
 
     private final ConcurrentHashMap<UUID, StatsPlayer> statsMap;
+    /**
+     * -- SETTER --
+     *  Set the minecraft server. Meant to be called on server start.
+     *
+     */
+    @Setter
+    @Getter
     private MinecraftServer minecraftServer;
     private boolean offlineAdded = false;
 
@@ -36,19 +45,6 @@ public class StatisticsManager {
     public static StatisticsManager getInstance() {
         if (INSTANCE == null) INSTANCE = new StatisticsManager();
         return INSTANCE;
-    }
-
-    /**
-     * Set the minecraft server. Meant to be called on server start.
-     *
-     * @param server the MinecraftServer instance to set
-     */
-    public void setMinecraftServer(MinecraftServer server) {
-        this.minecraftServer = server;
-    }
-
-    public MinecraftServer getMinecraftServer() {
-        return this.minecraftServer;
     }
 
     public void addPlayer(ServerPlayer player) {
