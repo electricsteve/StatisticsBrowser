@@ -1,12 +1,20 @@
 <script setup lang="ts">
-const players = [
-  {name: 'ElectricSteve', uuid: 'ad2614b7-c330-4b1e-b53b-292a978b110a'},
-]
+import type {PlayerInfo} from "../types/PlayerInfo.ts";
+
+const props = defineProps<{
+  players: PlayerInfo[];
+  selectedPlayerUuid: string | null;
+  loading: boolean;
+  error: string;
+}>()
+const emit = defineEmits<{
+  select_player: [player: PlayerInfo]
+}>()
 </script>
 
 <template>
   <div class="player-list" role="list">
-    <button v-for="player in players" :key="player.name" class="player-row" role="menuitem">
+    <button v-for="player in players" :key="player.name" class="player-row" role="menuitem" @click="emit('select_player', player)">
       <img class="player-mark" :src="'/api/playerhead/' + player.uuid" alt="player head" aria-hidden="true">
       <span class="player-name">{{ player.name }}</span>
     </button>
