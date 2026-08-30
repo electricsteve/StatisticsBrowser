@@ -13,7 +13,7 @@ const error = ref("")
 async function fetchPlayers() {
   loading.value = true
   try {
-    const res = await fetch('/api/playerlist')
+    const res = await fetch('/api/playerlist?offline=true')
     if (!res.ok) throw new Error('Failed to fetch players')
     players.value = await res.json()
   } catch (e) {
